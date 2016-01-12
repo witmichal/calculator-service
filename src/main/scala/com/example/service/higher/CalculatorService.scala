@@ -12,17 +12,15 @@ import scalaz.Reader
   */
 class CalculatorService(
                          divisionService: DivisionService,
-                         multiplicationService: MultiplicationService,
-                         reminderService: ReminderService,
-                         subtractionService: SubtractionService
+                         reminderService: ReminderService
                        ) {
 
   def add(a: Int, b: Int): Reader[Config, Future[Result]] = Reader( (config: Config) =>
     config.additionService.add (a,b) )
   def sub(a: Int, b: Int): Reader[Config, Future[Result]] = Reader( (config: Config) =>
-    subtractionService.sub (a,b) )
+    config.subtractionService.sub (a,b) )
   def mul(a: Int, b: Int): Reader[Config, Future[Result]] = Reader( (config: Config) =>
-    multiplicationService.mul (a,b) )
+    config.multiplicationService.mul (a,b) )
   def rem(a: Int, b: Int): Future[Either[Error,Result]] = reminderService.rem (a,b)
   def div(a: Int, b: Int): Future[Either[Error,Result]] = divisionService.div (a,b)
 

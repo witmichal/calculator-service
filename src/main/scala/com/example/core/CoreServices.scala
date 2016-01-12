@@ -5,17 +5,12 @@ import com.example.service.lower._
 
 trait CoreServices {
 
-
   private val divisionService = DivisionService.create
-  private val multiplicationService = MultiplicationService.create
   private val reminderService = ReminderService.create
-  private val subtractionService = SubtractionService.create
 
   val calculatorService = new CalculatorService(
     divisionService: DivisionService,
-    multiplicationService: MultiplicationService,
-    reminderService: ReminderService,
-    subtractionService: SubtractionService
+    reminderService: ReminderService
   )
 
 }
