@@ -3,12 +3,13 @@ package com.example.service.higher
 import com.example.marshalling.Error
 import com.example.marshalling.Result
 import com.example.service.lower._
+import com.google.inject.Inject
 import scala.concurrent.Future
 
 /**
   * Some kind of higher-order service that's dependent on other - lower-level services.
   */
-class CalculatorService(
+class CalculatorService @Inject() (
                          additionService: AdditionService,
                          divisionService: DivisionService,
                          multiplicationService: MultiplicationService,

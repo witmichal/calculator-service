@@ -2,22 +2,27 @@ package com.example.core
 
 import com.example.service.higher.CalculatorService
 import com.example.service.lower._
+import com.google.inject.{Guice, AbstractModule}
+import net.codingwell.scalaguice.ScalaModule
+import net.codingwell.scalaguice.InjectorExtensions._
 
 trait CoreServices {
 
-  private val divisionService = DivisionService.create
-  private val multiplicationService = MultiplicationService.create
-  private val reminderService = ReminderService.create
-  private val subtractionService = SubtractionService.create
-  private val additionService = AdditionService.create
+  class DiModule extends AbstractModule with ScalaModule {
+    def configure = {
+      bind[DivisionService]
+      bind[AdditionService]
+      bind[SubtractionService]
+      bind[MultiplicationService]
+      bind[ReminderService]
+      bind[CalculatorService]
+    }
+  }
 
-  val calculatorService = new CalculatorService(
-    additionService: AdditionService,
-    divisionService: DivisionService,
-    multiplicationService: MultiplicationService,
-    reminderService: ReminderService,
-    subtractionService: SubtractionService
-  )
+  val injector = Guice.createInjector(new DiModule)
+
+  val calculatorService = injector.instance[CalculatorService]
+
 
 }
 
