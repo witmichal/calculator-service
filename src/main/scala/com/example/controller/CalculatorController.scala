@@ -128,7 +128,7 @@ trait DivRoute extends HttpServiceBase {
     path( basePath / "div" / IntNumber / IntNumber ) { (a, b) =>
       respondWithMediaType(`application/json`) {
         complete {
-          service.div(a,b)
+          service.div(a,b)(SimpleConfig)
         }
       }
     }
@@ -150,7 +150,7 @@ trait RemRoute extends HttpServiceBase {
     path(basePath / "rem" / IntNumber / IntNumber) { (a, b) =>
       respondWithMediaType(`application/json`) {
         complete {
-          service.rem(a, b)
+          service.rem(a, b)(SimpleConfig)
         }
       }
     }
