@@ -3,6 +3,7 @@ package com.example.controller
 import javax.ws.rs.Path
 
 import akka.actor.{ActorRefFactory}
+import com.example.core.SimpleConfig
 import com.example.marshalling.{Error, Result}
 import com.example.service.higher.CalculatorService
 import com.wordnik.swagger.annotations.{ApiImplicitParam, ApiImplicitParams, ApiOperation, Api}
@@ -61,7 +62,7 @@ trait AddRoute extends HttpServiceBase {
     path( basePath / "add" / IntNumber / IntNumber ) { (a, b) =>
       respondWithMediaType(`application/json`) {
         complete {
-          service.add(a, b)
+          (service.add(a, b))(SimpleConfig)
         }
       }
     }
@@ -83,7 +84,7 @@ trait SubRoute extends HttpServiceBase {
     path( basePath / "sub" / IntNumber / IntNumber ) { (a, b) =>
       respondWithMediaType(`application/json`) {
         complete {
-          service.sub(a, b)
+          service.sub(a, b)(SimpleConfig)
         }
       }
     }
@@ -105,7 +106,7 @@ trait MulRoute extends HttpServiceBase {
     path( basePath / "mul" / IntNumber / IntNumber ) { (a, b) =>
       respondWithMediaType(`application/json`) {
         complete {
-          service.mul(a,b)
+          service.mul(a,b)(SimpleConfig)
         }
       }
     }
