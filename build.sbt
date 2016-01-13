@@ -1,4 +1,4 @@
-organization  := "com.example"
+organization  := "pl.witm"
 
 version       := "0.1"
 
