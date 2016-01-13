@@ -2,22 +2,22 @@ package com.example.core
 
 import com.example.service.higher.CalculatorService
 import com.example.service.lower._
+import scaldi.{Injectable, Module}
 
-trait CoreServices {
+trait CoreServices extends Injectable {
 
-  private val divisionService = DivisionService.create
-  private val multiplicationService = MultiplicationService.create
-  private val reminderService = ReminderService.create
-  private val subtractionService = SubtractionService.create
-  private val additionService = AdditionService.create
+  class DiModule extends Module {
+    bind[DivisionService] to injected [DivisionService]
+    bind[AdditionService] to injected [AdditionService]
+    bind[SubtractionService] to injected [SubtractionService]
+    bind[MultiplicationService] to injected [MultiplicationService]
+    bind[ReminderService] to injected [ReminderService]
+    bind[CalculatorService] to injected [CalculatorService]
+  }
 
-  val calculatorService = new CalculatorService(
-    additionService: AdditionService,
-    divisionService: DivisionService,
-    multiplicationService: MultiplicationService,
-    reminderService: ReminderService,
-    subtractionService: SubtractionService
-  )
+  implicit val injector = new DiModule
+
+  val calculatorService = inject[CalculatorService]
 
 }
 

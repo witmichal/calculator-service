@@ -12,7 +12,7 @@ libraryDependencies ++= {
   val sprayJsonV = "1.3.2"
   val swaggerV = "0.5.1"
   val specs2V = "2.3.11"
-  val scalaGuiceV = "4.0.1"
+  val scalDiV = "0.4"
   Seq(
     "io.spray"            %%  "spray-can"     % sprayV,
     "io.spray"            %%  "spray-routing" % sprayV,
@@ -22,7 +22,7 @@ libraryDependencies ++= {
     "com.typesafe.akka"   %%  "akka-testkit"  % akkaV   % "test",
     "org.specs2"          %%  "specs2-core"   % specs2V % "test",
     "com.gettyimages"     %% "spray-swagger"  % swaggerV,
-    "net.codingwell"      %% "scala-guice"    % scalaGuiceV
+    "org.scaldi"          %% "scaldi"         % scalDiV
   )
 }
 
