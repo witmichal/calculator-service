@@ -21,10 +21,10 @@ libraryDependencies ++= {
     "io.spray"            %%  "spray-json"    % sprayJsonV,
     "com.typesafe.akka"   %%  "akka-actor"    % akkaV,
     "com.typesafe.akka"   %%  "akka-testkit"  % akkaV   % "test",
-    //"org.specs2"          %%  "specs2-core"   % specs2V % "test",
     "org.scalatest"       %% "scalatest"      % scalatestV,
     "com.gettyimages"     %% "spray-swagger"  % swaggerV,
     "org.scalaz"          %%  "scalaz-core"   % scalazV
+
   )
 }
 

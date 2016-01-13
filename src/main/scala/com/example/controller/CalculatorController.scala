@@ -3,8 +3,8 @@ package com.example.controller
 import javax.ws.rs.Path
 
 import akka.actor.{ActorRefFactory}
-import com.example.core.SimpleConfig
-import com.example.marshalling.{Error, Result}
+import com.example.api.InjectedHttpService
+import com.example.core.{SimpleConfig}
 import com.example.service.higher.CalculatorService
 import com.wordnik.swagger.annotations.{ApiImplicitParam, ApiImplicitParams, ApiOperation, Api}
 import spray.http.MediaTypes
@@ -22,7 +22,7 @@ import com.example.marshalling.ResponseJsonProtocol._
   produces = "application/json, text/xml"
 )
 class CalculatorController(calculatorService: CalculatorService)(implicit val actorRefFactory: ActorRefFactory)
-  extends HttpService with HelpRoute with CalculatorPath with Serviced
+  extends InjectedHttpService(SimpleConfig) with HelpRoute with CalculatorPath with Serviced
   with AddRoute with SubRoute with MulRoute with DivRoute with RemRoute {
 
   override val service = calculatorService
@@ -49,7 +49,7 @@ trait Serviced {
 }
 
 trait AddRoute extends HttpServiceBase {
-  this: CalculatorPath with Serviced =>
+  this: InjectedHttpService with CalculatorPath with Serviced =>
 
   @Path("/add/{a}/{b}")
   @ApiOperation(value = "Add two integers.", notes = "Returns result of addition operation.", httpMethod = "POST", response =
@@ -62,7 +62,7 @@ trait AddRoute extends HttpServiceBase {
     path( basePath / "add" / IntNumber / IntNumber ) { (a, b) =>
       respondWithMediaType(`application/json`) {
         complete {
-          (service.add(a, b))(SimpleConfig)
+          (service.add(a, b))(config)
         }
       }
     }
@@ -71,7 +71,7 @@ trait AddRoute extends HttpServiceBase {
 }
 
 trait SubRoute extends HttpServiceBase {
-  this: CalculatorPath with Serviced =>
+  this: InjectedHttpService with CalculatorPath with Serviced =>
 
   @Path("/sub/{a}/{b}")
   @ApiOperation(value = "Subtracts two integers.", notes = "Returns result of subtraction operation.", httpMethod = "POST", response =
@@ -84,7 +84,7 @@ trait SubRoute extends HttpServiceBase {
     path( basePath / "sub" / IntNumber / IntNumber ) { (a, b) =>
       respondWithMediaType(`application/json`) {
         complete {
-          service.sub(a, b)(SimpleConfig)
+          service.sub(a, b)(config)
         }
       }
     }
@@ -93,7 +93,7 @@ trait SubRoute extends HttpServiceBase {
 }
 
 trait MulRoute extends HttpServiceBase {
-  this: CalculatorPath with Serviced =>
+  this: InjectedHttpService with CalculatorPath with Serviced =>
 
   @Path("/mul/{a}/{b}")
   @ApiOperation(value = "Multiplicates two integers.", notes = "Returns result of multiplication operation.", httpMethod = "POST", response =
@@ -106,7 +106,7 @@ trait MulRoute extends HttpServiceBase {
     path( basePath / "mul" / IntNumber / IntNumber ) { (a, b) =>
       respondWithMediaType(`application/json`) {
         complete {
-          service.mul(a,b)(SimpleConfig)
+          service.mul(a,b)(config)
         }
       }
     }
@@ -115,7 +115,7 @@ trait MulRoute extends HttpServiceBase {
 }
 
 trait DivRoute extends HttpServiceBase {
-  this: CalculatorPath with Serviced =>
+  this: InjectedHttpService with CalculatorPath with Serviced =>
 
   @Path("/div/{a}/{b}")
   @ApiOperation(value = "Divides two integers.", notes = "Returns result of division operation.", httpMethod = "POST", response =
@@ -128,7 +128,7 @@ trait DivRoute extends HttpServiceBase {
     path( basePath / "div" / IntNumber / IntNumber ) { (a, b) =>
       respondWithMediaType(`application/json`) {
         complete {
-          service.div(a,b)(SimpleConfig)
+          service.div(a,b)(config)
         }
       }
     }
@@ -137,7 +137,7 @@ trait DivRoute extends HttpServiceBase {
 }
 
 trait RemRoute extends HttpServiceBase {
-  this: CalculatorPath with Serviced =>
+  this: InjectedHttpService with CalculatorPath with Serviced =>
 
   @Path("/rem/{a}/{b}")
   @ApiOperation(value = "Reminder of two integers.", notes = "Returns result of reminder operation.", httpMethod = "POST", response =
@@ -150,7 +150,7 @@ trait RemRoute extends HttpServiceBase {
     path(basePath / "rem" / IntNumber / IntNumber) { (a, b) =>
       respondWithMediaType(`application/json`) {
         complete {
-          service.rem(a, b)(SimpleConfig)
+          service.rem(a, b)(config)
         }
       }
     }
