@@ -12,4 +12,7 @@ out
 *.ipr
 *.iws
 
+# file created by ScalDI library
+.DS_Store
+
 /out/
